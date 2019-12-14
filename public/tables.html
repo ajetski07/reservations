@@ -1,13 +1,14 @@
-  <!DOCTYPE html>
-  <html lang="en">
-  <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta http-equiv="X-UA-Compatible" content="ie=edge">
-      <title>Document</title>
-  </head>
-  <body>
-      
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Hot Restaurant!</title>
+
+
+
   <!-- Latest compiled and minified CSS & JS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -28,7 +29,8 @@
       <br>
 
       <div class="text-center">
-        <a href="/res"><button class="btn btn-lg btn-danger"><i class="fas fa-utensils"></i> Make Reservation</button></a>
+        <a href="/res"><button class="btn btn-lg btn-danger"><i class="fas fa-utensils"></i> Make
+            Reservation</button></a>
         <a href="/"><button class="btn btn-lg btn-default"><span class="fa fa-home"></span></button></a>
       </div>
     </div>
@@ -59,14 +61,6 @@
     </div>
 
 
-    <footer class="footer mt-4">
-      <div class="container">
-        <p>Control Panel</p>
-        <p><a href="#" id="clear">Clear Table</a> | <a href="/api/tables">API Table Link</a> | <a href="/api/waitlist">API
-            Wait List</a>
-      </div>
-    </footer>
-
   </div>
 
 </body>
@@ -75,85 +69,75 @@
 
 <script type="text/javascript">
 
-  
+
   function runTableQuery() {
     // The AJAX function uses the URL of our API to GET the data associated with it (initially set to localhost)
-    $.ajax({ url: "/api/tables", method: "GET" })
-      .then(function(tableData) {
+    $.post("/api/getres", "")
+      .then(function (tableData) {
 
-        //  log the tableData to console, where it will show up as an object.
+        //  log the tableData to console 
         console.log(tableData);
         console.log("------------------------------------");
 
         // Loop through and display each of the customers
-        for (var i = 0; i < tableData.length; i++) {
+        for (var i = 0; i < tableData.tables.length; i++) {
 
           var tableList = $("#tableList");
 
-          
+
           var listItem = $("<li class='list-group-item mt-4'>");
 
           listItem.append(
             $("<h2>").text("Table #" + (i + 1)),
             $("<hr>"),
-            $("<h2>").text("ID: " + tableData[i].customerID),
-            $("<h2>").text("Name: " + tableData[i].customerName),
-            $("<h2>").text("Email: " + tableData[i].customerEmail),
-            $("<h2>").text("Phone: " + tableData[i].phoneNumber)
+            $("<h2>").text("ID: " + tableData.tables[i].id),
+            $("<h2>").text("Name: " + tableData.tables[i].name),
+            $("<h2>").text("Email: " + tableData.tables[i].email),
+            $("<h2>").text("Phone: " + tableData.tables[i].phone)
           );
 
           tableList.append(listItem);
         }
-      });
-  }
-
-  function runWaitListQuery() {
-
-    
-    $.ajax({ url: "/api/waitlist", method: "GET" })
-      .then(function(waitData) {
-
-        // log the waitlistData to console
-        console.log(waitData);
-        console.log("------------------------------------");
-
-   
-        for (var i = 0; i < waitData.length; i++) {
-
-         
-          var waitList = $("#waitList");
-
+        //handles waitlist
+        for (var i = 0; i < tableData.waitlist.length; i++) {
+          var tableList = $("#tableList");
           var listItem = $("<li class='list-group-item mt-4'>");
 
           listItem.append(
-            $("<h2>").text("Table #" + (i + 1)),
+            $("<h2>").text("Waitlist #" + (i + 1)),
             $("<hr>"),
-            $("<h2>").text("ID: " + waitData[i].customerID),
-            $("<h2>").text("Name: " + waitData[i].customerName),
-            $("<h2>").text("Email: " + waitData[i].customerEmail),
-            $("<h2>").text("Phone: " + waitData[i].phoneNumber)
+            $("<h2>").text("ID: " + tableData.waitlist[i].id),
+            $("<h2>").text("Name: " + tableData.waitlist[i].name),
+            $("<h2>").text("Email: " + tableData.waitlist[i].email),
+            $("<h2>").text("Phone: " + tableData.waitlist[i].phone)
           );
 
-          waitList.append(listItem);
+          $("#waitList").append(listItem);
         }
       });
   }
-  function clearTable() {
-    alert("Clearing...");
 
-  
-    $.ajax({ url: "/api/clear", method: "POST" }).then(function() {
-      $("#waitList").empty();
-      $("#tableList").empty();
-    });
+  function clearTable() {
+    console.log("Clearing...");
+
+
+    // $.ajax({ url: "/api/clear", method: "POST" }).then(function () {
+    //   $("#waitList").empty();
+    //   $("#tableList").empty();
+    // });
   }
 
   $("#clear").on("click", clearTable);
 
 
-  
+
   runTableQuery();
-  runWaitListQuery();
 
 
 </script>
+
+<style>
+#waitList{
+    color:orange;
+  }
+</style>

@@ -1,3 +1,4 @@
+//@ts-check
 // Dependencies
 // =============================================================
 var express = require("express");
@@ -6,7 +7,7 @@ const fs = require("fs");
 // Sets up the Express App
 // =============================================================
 var app = express();
-var PORT = process.env.PORT || 3000;
+var PORT = process.env.PORT || 3001;
 
 
 //sets up data
@@ -48,13 +49,13 @@ app.post("/api/setres", function (req, res) {
 
     //id, name, email, phone
     fs.readFile(dataTablePath, "UTF-8", function (err, stringdata) {
-        
+
         let tabledata = JSON.parse(stringdata);
         console.log("data:", tabledata);
- 
+
         tabledata.tables.push(reservation);
         fs.writeFile(dataTablePath, JSON.stringify(tabledata), function (err) {
-            if(err){console.log("err", err);}
+            if (err) { console.log("err", err); }
         });
     })
 
@@ -62,14 +63,25 @@ app.post("/api/setres", function (req, res) {
 app.post("/api/getres", function (req, res) {
     // req.body hosts is equal to the JSON post sent from the user
     // This works because of our body parsing middleware
-    var reservation = req.body;
-    console.log(reservation);
+    var waitlist = req.body;
+    console.log(waitlist);
 
     //id, name, email, phone
 
     fs.readFile(dataTablePath, "UTF-8", function (err, stringdata) {
         let returndata = JSON.parse(stringdata);
-        res.json(return);
+
+        let first5 = returndata.tables.slice(0, 5);
+        console.log("first5: ", first5);
+        let waitlist;
+        console.log(returndata.tables.length);
+        if (returndata.tables.length > 5) {
+            waitlist = returndata.tables.slice(5, returndata.tables.length + 1);
+            console.log("waitlist: ", waitlist)
+        }
+        res.json(
+            { "tables": first5, "waitlist": waitlist, }
+        );
     })
 });
 
