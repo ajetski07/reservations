@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- //latest version of bootstrap// -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <!-- font awesome stackpath -->
+    <script src="https://kit.fontawesome.com/9a83877916.js" crossorigin="anonymous"></script>
+
+    <title>Hot Restaurant!</title>
+</head>
+<body>
+
+    <div class="container">
+        <div class="jumbotron" id="head">
+
+            <h1 class="text-center" id="page-header"><i class="fab fa-gripfire"></i> Hot Restaurant</h1>
+            <hr>
+            <h2 class="text-center" id="sub-header">We only have 5 tables! Book your seat before they are all gone!</h2>
+
+            <br>
+
+            <div class="text-center">
+
+                <a href="/table"><button class="btn btn-primary btn-lg" id="viewButton"><i class="fas fa-table"></i> View Tables</button></a>
+
+                <a href="/res"><button class="btn btn-danger btn-lg" id="resButton"><i class="fas fa-utensils"></i> Make a Reservation</button></a>
+            
+            </div>
+
+        </div>
+
+
+        <footer class="footer">
+            <div class="container">
+                <p><a href="/api/tables">API Table Link</a> | <a href="/api/waitlist">API Wait List</a>
+            </div>
+        </footer>
+          
+
+    </div>
+    
+</body>
+</html>
